@@ -3,10 +3,39 @@
 use strict;
 use warnings;
 
-
+# Variables
+my %zpool;
+my %disks;
 
 # Get The ZPool Status
+$zpool{'rawlist'} = `zpool list`;
+
+# Get Individual ZPool Status
+my @temp = split('\n', $zpool{'rawlist'});
+my $line = "";
+
+foreach $line (@temp) {
+    if ( $line !~ /NAME/ ) {
+        #               $1      $2      $3      $4      $5      $6      $7      $8      $9
+        if ( $line =~ /(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+/ ) {
+            printf("Found Data\n");
+
+            $zpool{$1}{'Size'} = $2;
+            $zpool{$1}{'Used'} = $3;
+            $zpool{$1}{'Free'} = $4;
+            $zpool{$1}{'Frag'} = $7;
+            $zpool{$1}{'Cap'}  = $8;
+            $zpool{$1}{'Health'} = $9;
+        }
+    }
+}
+
+foreach $line ( keys %zpool) {
+    printf("$line\n");
+}
+
 # Items to Collect
+
 #  - Name
 #  - Status
 #  - Read Errors

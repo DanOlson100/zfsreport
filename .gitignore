@@ -1,0 +1,6 @@
+# ZFS Report Git Ignore File
+# Directories
+
+# Files
+zfs_config.yaml
+

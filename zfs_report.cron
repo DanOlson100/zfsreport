@@ -1,0 +1,3 @@
+# Run ZFS Reports 
+00 22 * * Fri   root  /root/Repos/zfs_report/zfs_report.py > /dev/null 2>&1
+
